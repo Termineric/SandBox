@@ -1,0 +1,214 @@
+unit Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Vcl.StdCtrls,
+  REST.Response.Adapter, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, FireDAC.UI.Intf,
+  FireDAC.VCLUI.Wait, FireDAC.Comp.BatchMove.JSON, FireDAC.Comp.BatchMove,
+  FireDAC.Comp.BatchMove.DataSet, FireDAC.Comp.UI, FireDAC.Stan.StorageJSON,
+
+  System.JSON, Vcl.DBCtrls, System.Rtti,
+  System.Bindings.Outputs, Vcl.Bind.Editors, Data.Bind.EngExt,
+  Vcl.Bind.DBEngExt, Data.Bind.Components, Data.Bind.DBScope,
+  FireDAC.Stan.StorageBin,
+
+  Vcl.Bind.Grid,
+  Data.Bind.Grid,
+  Vcl.Samples.Spin, Vcl.Mask, Vcl.Samples.Bind.Editors;
+
+type
+  TForm2 = class(TForm)
+    DS_Json_Data: TDataSource;
+    TBL_Json_Data: TFDMemTable;
+    TBL_Json_DataName: TStringField;
+    TBL_Json_DataValue: TMemoField;
+    TBL_Json_DataTitel: TStringField;
+    RRDSA_Json_Data: TRESTResponseDataSetAdapter;
+    MMO_InJsonContent: TMemo;
+    PNL_GPX_Data_Items: TPanel;
+    Panel12: TPanel;
+    DBGrid3: TDBGrid;
+    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    FDBatchMove1: TFDBatchMove;
+    FDBatchMoveDataSetReader1: TFDBatchMoveDataSetReader;
+    FDBatchMoveJSONWriter1: TFDBatchMoveJSONWriter;
+    Label1: TLabel;
+    BTN_LoadFromJsonString: TButton;
+    BTN_SaveToJsonString: TButton;
+    Panel1: TPanel;
+    DBEdit1: TDBEdit;
+    DBMemo1: TDBMemo;
+    DBEdit2: TDBEdit;
+    LBL_001: TLabel;
+    LBL_002: TLabel;
+    LBL_003: TLabel;
+    CHB_NeedWrite: TCheckBox;
+    procedure BTN_SaveToJsonStringClick(Sender: TObject);
+    procedure BTN_LoadFromJsonStringClick(Sender: TObject);
+    procedure TBL_Json_DataUpdate;
+    procedure TBL_Json_DataAfterOpen(DataSet: TDataSet);
+    procedure TBL_Json_DataUpdateRecord(ASender: TDataSet; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+      AOptions: TFDUpdateRowOptions);
+    procedure TBL_Json_DataAfterEdit(DataSet: TDataSet);
+    procedure TBL_Json_DataAfterInsert(DataSet: TDataSet);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+{$R *.dfm}
+
+uses REST.JSON, REST.Client;
+
+// ====================================================================================================================
+//
+// ====================================================================================================================
+type
+  TAdapterJSONValue = class(TInterfacedObject, IRESTResponseJSON)
+  private
+    FJSONValue: TJSONValue;
+  protected
+    { IRESTResponseJSON }
+    procedure AddJSONChangedEvent(const ANotify: TNotifyEvent);
+    procedure RemoveJSONChangedEvent(const ANotify: TNotifyEvent);
+    procedure GetJSONResponse(out AJSONValue: TJSONValue; out AHasOwner: Boolean);
+    function HasJSONResponse: Boolean;
+    function HasResponseContent: Boolean;
+  public
+    constructor Create(const AJSONValue: TJSONValue);
+    destructor Destroy; override;
+  end;
+  { TAdapterJSONValue }
+
+procedure TAdapterJSONValue.AddJSONChangedEvent(const ANotify: TNotifyEvent);
+begin
+  // Not implemented because we pass JSON in constructor and do not change it
+end;
+
+constructor TAdapterJSONValue.Create(const AJSONValue: TJSONValue);
+begin
+  FJSONValue := AJSONValue;
+end;
+
+destructor TAdapterJSONValue.Destroy;
+begin
+  // We own the JSONValue, so free it.
+  FJSONValue.Free;
+  inherited;
+end;
+
+procedure TAdapterJSONValue.GetJSONResponse(out AJSONValue: TJSONValue; out AHasOwner: Boolean);
+begin
+  AJSONValue := FJSONValue;
+  AHasOwner := True; // We own this object
+end;
+
+function TAdapterJSONValue.HasJSONResponse: Boolean;
+begin
+  Result := FJSONValue <> nil;
+end;
+
+function TAdapterJSONValue.HasResponseContent: Boolean;
+begin
+  Result := FJSONValue <> nil;
+end;
+
+procedure TAdapterJSONValue.RemoveJSONChangedEvent(const ANotify: TNotifyEvent);
+begin
+  // Not implemented because we pass JSON in constructor and do not change it
+end;
+
+// ====================================================================================================================
+//
+// ====================================================================================================================
+
+procedure TForm2.BTN_LoadFromJsonStringClick(Sender: TObject);
+var
+  LJSON: TJSONValue;
+  LIntf: IRESTResponseJSON;
+Begin
+  // Clear last value
+  RRDSA_Json_Data.ResponseJSON := nil;
+  LJSON := TJSONObject.ParseJSONValue(MMO_InJsonContent.Lines.Text);
+  if LJSON = nil then
+    raise Exception.Create('Invalid JSON');
+  LIntf := TAdapterJSONValue.Create(LJSON);
+  RRDSA_Json_Data.ResponseJSON := LIntf;
+
+  TBL_Json_Data.Active := True;
+  TBL_Json_Data.OnUpdateRecord := TBL_Json_DataUpdateRecord;
+  TBL_Json_Data.AfterEdit := TBL_Json_DataAfterEdit;
+  TBL_Json_Data.AfterInsert := TBL_Json_DataAfterInsert;
+end;
+
+function StreamToString(const Stream: TStream): string;
+var
+  StringBytes: TBytes;
+begin
+  Stream.Position := 0;
+  SetLength(StringBytes, Stream.Size);
+  Stream.ReadBuffer(StringBytes, Stream.Size);
+  Result := TEncoding.ANSI.GetString(StringBytes);
+end;
+
+procedure TForm2.BTN_SaveToJsonStringClick(Sender: TObject);
+var
+  JsonStream: TStringStream;
+begin
+  JsonStream := TStringStream.Create;
+  try
+
+    FDBatchMoveJSONWriter1.Stream := JsonStream;
+    FDBatchMove1.Execute;
+    MMO_InJsonContent.Text :='{"JSON-Data":'+JsonStream.DataString+'}';
+  finally
+    JsonStream.Free;
+  end;
+
+end;
+
+procedure TForm2.TBL_Json_DataAfterEdit(DataSet: TDataSet);
+begin
+  TBL_Json_DataUpdate;
+end;
+
+procedure TForm2.TBL_Json_DataAfterInsert(DataSet: TDataSet);
+begin
+  TBL_Json_DataUpdate;
+end;
+
+procedure TForm2.TBL_Json_DataAfterOpen(DataSet: TDataSet);
+begin
+  TBL_Json_Data.Tag := 0;
+end;
+
+procedure TForm2.TBL_Json_DataUpdate;
+begin
+  if TBL_Json_Data.Active then
+    TBL_Json_Data.Tag := 1;
+
+  if TBL_Json_Data.Tag = 1 then
+    CHB_NeedWrite.Checked := True
+  else
+    CHB_NeedWrite.Checked := false;
+end;
+
+procedure TForm2.TBL_Json_DataUpdateRecord(ASender: TDataSet; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+  AOptions: TFDUpdateRowOptions);
+begin
+  TBL_Json_DataUpdate;
+end;
+
+end.
