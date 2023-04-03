@@ -57,14 +57,10 @@ type
       AOptions: TFDUpdateRowOptions);
     procedure TBL_Json_DataAfterEdit(DataSet: TDataSet);
     procedure TBL_Json_DataAfterInsert(DataSet: TDataSet);
-    procedure FormShow(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    BaseFolder:String;
   end;
 
 var
@@ -173,6 +169,7 @@ var
 begin
   JsonStream := TStringStream.Create;
   try
+
     FDBatchMoveJSONWriter1.Stream := JsonStream;
     FDBatchMove1.Execute;
     MMO_InJsonContent.Text :='{"JSON-Data":'+JsonStream.DataString+'}';
@@ -180,23 +177,6 @@ begin
     JsonStream.Free;
   end;
 
-end;
-
-procedure TForm2.FormCreate(Sender: TObject);
-begin
-BaseFolder:=ExtractFileDir(ParamStr(0));
-end;
-
-procedure TForm2.FormDestroy(Sender: TObject);
-begin
- //save json
- MMO_InJsonContent.Lines.SaveToFile(BaseFolder+'\DataStore.Json');
-end;
-
-procedure TForm2.FormShow(Sender: TObject);
-begin
-//load json
-MMO_InJsonContent.Lines.LoadFromFile(BaseFolder+'\DataStore.Json');
 end;
 
 procedure TForm2.TBL_Json_DataAfterEdit(DataSet: TDataSet);

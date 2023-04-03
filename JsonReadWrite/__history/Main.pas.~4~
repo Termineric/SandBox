@@ -173,6 +173,7 @@ var
 begin
   JsonStream := TStringStream.Create;
   try
+
     FDBatchMoveJSONWriter1.Stream := JsonStream;
     FDBatchMove1.Execute;
     MMO_InJsonContent.Text :='{"JSON-Data":'+JsonStream.DataString+'}';

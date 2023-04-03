@@ -1,0 +1,22 @@
+{"JSON-Data":[
+  {
+    "Titel": "Test nr 1",
+    "Value": "Some test data \r\nhere",
+    "Name": "Test#01"
+  },
+  {
+    "Titel": "Test nr 2",
+    "Value": "Some other test \r\ndata \r\nhere",
+    "Name": "Test#02"
+  },
+  {
+    "Titel": "Test nr 3",
+    "Value": "fvsvassfv",
+    "Name": "Test3"
+  },
+  {
+    "Titel": "Test nr 4",
+    "Value": "svsdfvsd",
+    "Name": "Test4"
+  }
+]}

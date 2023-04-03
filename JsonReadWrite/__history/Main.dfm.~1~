@@ -2,74 +2,56 @@ object Form2: TForm2
   Left = 0
   Top = 0
   Caption = 'TerminEric SandBox [ Json Content Read / Writer  ]'
-  ClientHeight = 772
-  ClientWidth = 1548
+  ClientHeight = 386
+  ClientWidth = 774
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -24
+  Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  OnShow = FormShow
-  PixelsPerInch = 192
-  TextHeight = 32
+  TextHeight = 15
   object MMO_InJsonContent: TMemo
     Left = 0
     Top = 0
-    Width = 434
-    Height = 772
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Width = 217
+    Height = 386
     Align = alLeft
     Lines.Strings = (
-      '{"JSON-Data":['
-      '  {'
-      '    "Titel": "Test nr 1",'
-      '    "Value": "Some test data \r\nhere",'
-      '    "Name": "Test#01"'
-      '  },'
-      '  {'
-      '    "Titel": "Test nr 2",'
-      '    "Value": "Some other test \r\ndata '
+      '{'
+      '"JSON-Data": ['
+      '                {'
+      '                    "Name": "Test#01",'
+      '                    "Value": "Some test data '
       'here",'
-      '    "Name": "Test#02"'
-      '  },'
-      '  {'
-      '    "Titel": "Test nr 3",'
-      '    "Value": "fvsvassfv",'
-      '    "Name": "Test3"'
-      '  }'
-      ']}')
+      '                    "Titel":"Test nr 1"'
+      '                },'
+      '                {'
+      '                    "Name": "Test#02",'
+      '                    "Value": "Some other test '
+      'data here",'
+      '                    "Titel":"Test nr 2"'
+      '                }'
+      '            ]'
+      '}')
     TabOrder = 0
-    ExplicitHeight = 771
+    ExplicitHeight = 421
   end
   object PNL_GPX_Data_Items: TPanel
-    Left = 434
+    Left = 217
     Top = 0
-    Width = 1114
-    Height = 772
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Width = 557
+    Height = 386
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 1100
-    ExplicitHeight = 771
+    ExplicitWidth = 754
+    ExplicitHeight = 421
     object Panel12: TPanel
       Left = 0
       Top = 0
-      Width = 1114
-      Height = 182
-      Margins.Left = 6
-      Margins.Top = 6
-      Margins.Right = 6
-      Margins.Bottom = 6
+      Width = 557
+      Height = 91
       Align = alTop
       Alignment = taLeftJustify
       BevelOuter = bvNone
@@ -77,178 +59,131 @@ object Form2: TForm2
       Color = 16091980
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -24
+      Font.Height = -12
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentBackground = False
       ParentFont = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 1100
+      ExplicitWidth = 886
       object Label1: TLabel
-        Left = 12
-        Top = 6
-        Width = 182
-        Height = 32
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 6
+        Top = 3
+        Width = 88
+        Height = 15
         Caption = 'Json Data Items'
       end
       object BTN_LoadFromJsonString: TButton
-        Left = 12
-        Top = 48
-        Width = 310
-        Height = 50
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 6
+        Top = 24
+        Width = 155
+        Height = 25
         Caption = '>> Load from Json string'
         TabOrder = 0
         OnClick = BTN_LoadFromJsonStringClick
       end
       object BTN_SaveToJsonString: TButton
-        Left = 12
-        Top = 110
-        Width = 276
-        Height = 50
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 6
+        Top = 55
+        Width = 138
+        Height = 25
         Caption = '<<< Save to Json string'
         TabOrder = 1
         OnClick = BTN_SaveToJsonStringClick
       end
       object CHB_NeedWrite: TCheckBox
-        Left = 448
-        Top = 96
-        Width = 194
-        Height = 34
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 224
+        Top = 48
+        Width = 97
+        Height = 17
         Caption = 'Need Update'
         TabOrder = 2
       end
     end
     object DBGrid3: TDBGrid
       Left = 0
-      Top = 182
-      Width = 1114
-      Height = 306
-      Margins.Left = 6
-      Margins.Top = 6
-      Margins.Right = 6
-      Margins.Bottom = 6
+      Top = 91
+      Width = 557
+      Height = 153
       Align = alClient
       DataSource = DS_Json_Data
       TabOrder = 1
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
-      TitleFont.Height = -24
+      TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
     end
     object Panel1: TPanel
       Left = 0
-      Top = 488
-      Width = 1114
-      Height = 284
-      Margins.Left = 6
-      Margins.Top = 6
-      Margins.Right = 6
-      Margins.Bottom = 6
+      Top = 244
+      Width = 557
+      Height = 142
       Align = alBottom
       Caption = 'Panel1'
       ShowCaption = False
       TabOrder = 2
-      ExplicitTop = 487
-      ExplicitWidth = 1100
+      ExplicitTop = 279
+      ExplicitWidth = 754
       DesignSize = (
-        1114
-        284)
+        557
+        142)
       object LBL_001: TLabel
-        Left = 12
-        Top = 44
-        Width = 137
-        Height = 32
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 6
+        Top = 22
+        Width = 66
+        Height = 15
         Caption = 'Title of entry'
       end
       object LBL_002: TLabel
-        Left = 12
-        Top = 166
-        Width = 155
-        Height = 32
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 6
+        Top = 83
+        Width = 76
+        Height = 15
         Caption = 'Name of entry'
       end
       object LBL_003: TLabel
-        Left = 364
-        Top = 12
-        Width = 204
-        Height = 32
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 182
+        Top = 6
+        Width = 99
+        Height = 15
         Anchors = [akTop, akRight]
         Caption = 'Value of entry >>>'
+        ExplicitLeft = 479
       end
       object DBEdit1: TDBEdit
-        Left = 12
-        Top = 76
-        Width = 536
-        Height = 40
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 6
+        Top = 38
+        Width = 268
+        Height = 23
         Anchors = [akLeft, akTop, akRight]
         DataField = 'Titel'
         DataSource = DS_Json_Data
         TabOrder = 0
-        ExplicitWidth = 522
+        ExplicitWidth = 465
       end
       object DBMemo1: TDBMemo
-        Left = 575
+        Left = 287
         Top = 1
-        Width = 538
-        Height = 282
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Width = 269
+        Height = 140
         Align = alRight
         DataField = 'Value'
         DataSource = DS_Json_Data
         TabOrder = 1
-        ExplicitLeft = 561
+        ExplicitLeft = 484
       end
       object DBEdit2: TDBEdit
-        Left = 12
-        Top = 208
-        Width = 536
-        Height = 40
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
+        Left = 6
+        Top = 104
+        Width = 268
+        Height = 23
         Anchors = [akLeft, akTop, akRight]
         DataField = 'Name'
         DataSource = DS_Json_Data
         TabOrder = 2
-        ExplicitWidth = 522
+        ExplicitWidth = 465
       end
     end
   end

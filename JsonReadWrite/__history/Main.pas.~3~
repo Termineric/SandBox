@@ -173,6 +173,7 @@ var
 begin
   JsonStream := TStringStream.Create;
   try
+
     FDBatchMoveJSONWriter1.Stream := JsonStream;
     FDBatchMove1.Execute;
     MMO_InJsonContent.Text :='{"JSON-Data":'+JsonStream.DataString+'}';
@@ -184,7 +185,7 @@ end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-BaseFolder:=ExtractFileDir(ParamStr(0));
+BaseFolder:=ExtractFileDir(ExtractFileDir(ParamStr(0)));
 end;
 
 procedure TForm2.FormDestroy(Sender: TObject);
