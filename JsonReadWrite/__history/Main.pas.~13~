@@ -170,12 +170,10 @@ procedure TForm2.BTN_LoadFromJsonStringClick(Sender: TObject);
 var
   LJSON: TJSONValue;
   LIntf: IRESTResponseJSON;
-    DataOut:String;
 Begin
   // Clear last value
   RRDSA_Json_Data.ResponseJSON := nil;
-   DataOut:=TNetEncoding.Base64.Decode(MMO_InJsonContent.Text);
-  LJSON := TJSONObject.ParseJSONValue('{"JSON-Data":'+DataOut+'}');
+  LJSON := TJSONObject.ParseJSONValue(MMO_InJsonContent.Lines.Text);
   if LJSON = nil then
     raise Exception.Create('Invalid JSON');
   LIntf := TAdapterJSONValue.Create(LJSON);

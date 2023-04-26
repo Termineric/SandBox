@@ -12,6 +12,7 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Comp.BatchMove.JSON, FireDAC.Comp.BatchMove,
   FireDAC.Comp.BatchMove.DataSet, FireDAC.Comp.UI, FireDAC.Stan.StorageJSON,
 
+  System.NetEncoding,
   System.JSON, Vcl.DBCtrls, System.Rtti,
   System.Bindings.Outputs, Vcl.Bind.Editors, Data.Bind.EngExt,
   Vcl.Bind.DBEngExt, Data.Bind.Components, Data.Bind.DBScope,
@@ -49,6 +50,8 @@ type
     LBL_002: TLabel;
     LBL_003: TLabel;
     CHB_NeedWrite: TCheckBox;
+    MMO_BASE64Content: TMemo;
+    Button1: TButton;
     procedure BTN_SaveToJsonStringClick(Sender: TObject);
     procedure BTN_LoadFromJsonStringClick(Sender: TObject);
     procedure TBL_Json_DataUpdate;
@@ -60,6 +63,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -170,17 +174,44 @@ end;
 procedure TForm2.BTN_SaveToJsonStringClick(Sender: TObject);
 var
   JsonStream: TStringStream;
+ // DataOut:String;
 begin
   JsonStream := TStringStream.Create;
   try
-
     FDBatchMoveJSONWriter1.Stream := JsonStream;
     FDBatchMove1.Execute;
-    MMO_InJsonContent.Text :='{"JSON-Data":'+JsonStream.DataString+'}';
+   // DataOut:=  JsonStream.DataString;
+    MMO_BASE64Content.Text :=TNetEncoding.Base64.Encode(JsonStream.DataString);
+
+//    Encode('Example') returns 'RXhhbXBsZQ=='.
+//Decode('RXhhbXBsZQ==') returns 'Example'
+
   finally
     JsonStream.Free;
   end;
 
+end;
+
+procedure TForm2.Button1Click(Sender: TObject);
+var
+  LJSON: TJSONValue;
+  LIntf: IRESTResponseJSON;
+  DataOut:String;
+Begin
+  // Clear last value
+  RRDSA_Json_Data.ResponseJSON := nil;
+  DataOut:=TNetEncoding.Base64.Decode(MMO_BASE64Content.Text);
+
+  LJSON := TJSONObject.ParseJSONValue('{"JSON-Data":'+DataOut+'}');
+  if LJSON = nil then
+    raise Exception.Create('Invalid JSON');
+  LIntf := TAdapterJSONValue.Create(LJSON);
+  RRDSA_Json_Data.ResponseJSON := LIntf;
+
+  TBL_Json_Data.Active := True;
+  TBL_Json_Data.OnUpdateRecord := TBL_Json_DataUpdateRecord;
+  TBL_Json_Data.AfterEdit := TBL_Json_DataAfterEdit;
+  TBL_Json_Data.AfterInsert := TBL_Json_DataAfterInsert;
 end;
 
 procedure TForm2.FormCreate(Sender: TObject);

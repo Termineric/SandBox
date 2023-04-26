@@ -90,7 +90,7 @@ object Form2: TForm2
         Height = 25
         Caption = '>> Load from Json string'
         TabOrder = 0
-        OnClick = BTN_LoadFromJsonStringClick
+        OnClick = Button1Click
       end
       object BTN_SaveToJsonString: TButton
         Left = 6

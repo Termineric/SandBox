@@ -1,22 +1,7 @@
-{"JSON-Data":[
-  {
-    "Titel": "Test nr 1",
-    "Value": "Some test data \r\nhere",
-    "Name": "Test#01"
-  },
-  {
-    "Titel": "Test nr 2",
-    "Value": "Some other test \r\ndata \r\nhere",
-    "Name": "Test#02"
-  },
-  {
-    "Titel": "Test nr 3",
-    "Value": "fvsvassfv",
-    "Name": "Test3"
-  },
-  {
-    "Titel": "Test nr 4",
-    "Value": "svsdfvsd",
-    "Name": "Test4"
-  }
-]}
+{"JSON-Data":Ww0KICB7DQogICAgIlRpdGVsIjogIlRlc3QgbnIgMSIsDQogICAgIlZhbHVlIjogIlNvbWUgdGVz
+dCBkYXRhIFxyXG5oZXJlIiwNCiAgICAiTmFtZSI6ICJUZXN0IzAxIg0KICB9LA0KICB7DQogICAg
+IlRpdGVsIjogIlRlc3QgbnIgMiIsDQogICAgIlZhbHVlIjogIlNvbWUgb3RoZXIgdGVzdCBcclxu
+ZGF0YSBcclxuaGVyZSIsDQogICAgIk5hbWUiOiAiVGVzdCMwMiINCiAgfSwNCiAgew0KICAgICJU
+aXRlbCI6ICJUZXN0IG5yIDMiLA0KICAgICJWYWx1ZSI6ICJmdnN2YXNzZnYiLA0KICAgICJOYW1l
+IjogIlRlc3QzIg0KICB9LA0KICB7DQogICAgIlRpdGVsIjogIlRlc3QgbnIgNCIsDQogICAgIlZh
+bHVlIjogInN2c2RmdnNkIiwNCiAgICAiTmFtZSI6ICJUZXN0NCINCiAgfQ0KXQ==}

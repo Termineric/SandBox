@@ -71,8 +71,7 @@ object Form2: TForm2
       ParentFont = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = -6
-      ExplicitTop = -6
+      ExplicitWidth = 553
       DesignSize = (
         607
         91)
@@ -93,11 +92,12 @@ object Form2: TForm2
         OnClick = BTN_LoadFromJsonStringClick
       end
       object BTN_SaveToJsonString: TButton
-        Left = 6
-        Top = 55
+        Left = 463
+        Top = 47
         Width = 138
         Height = 25
-        Caption = '<<< Save to Json string'
+        Anchors = [akTop, akRight]
+        Caption = 'Save to Json string >>>'
         TabOrder = 1
         OnClick = BTN_SaveToJsonStringClick
       end
@@ -118,16 +118,6 @@ object Form2: TForm2
         Caption = 'Load from Json string <<<'
         TabOrder = 3
         OnClick = Button1Click
-      end
-      object Button2: TButton
-        Left = 463
-        Top = 47
-        Width = 138
-        Height = 25
-        Anchors = [akTop, akRight]
-        Caption = 'Save to Json string >>>'
-        TabOrder = 4
-        OnClick = Button2Click
       end
     end
     object DBGrid3: TDBGrid

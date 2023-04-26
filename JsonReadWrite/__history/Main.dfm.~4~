@@ -2,8 +2,8 @@ object Form2: TForm2
   Left = 0
   Top = 0
   Caption = 'TerminEric SandBox [ Json Content Read / Writer  ]'
-  ClientHeight = 523
-  ClientWidth = 1041
+  ClientHeight = 386
+  ClientWidth = 774
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object Form2: TForm2
     Left = 0
     Top = 0
     Width = 217
-    Height = 523
+    Height = 386
     Align = alLeft
     Lines.Strings = (
       '{"JSON-Data":['
@@ -45,8 +45,8 @@ object Form2: TForm2
   object PNL_GPX_Data_Items: TPanel
     Left = 217
     Top = 0
-    Width = 607
-    Height = 523
+    Width = 557
+    Height = 386
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
@@ -55,7 +55,7 @@ object Form2: TForm2
     object Panel12: TPanel
       Left = 0
       Top = 0
-      Width = 607
+      Width = 557
       Height = 91
       Align = alTop
       Alignment = taLeftJustify
@@ -71,11 +71,7 @@ object Form2: TForm2
       ParentFont = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = -6
-      ExplicitTop = -6
-      DesignSize = (
-        607
-        91)
+      ExplicitWidth = 553
       object Label1: TLabel
         Left = 6
         Top = 3
@@ -109,32 +105,12 @@ object Form2: TForm2
         Caption = 'Need Update'
         TabOrder = 2
       end
-      object Button1: TButton
-        Left = 446
-        Top = 16
-        Width = 155
-        Height = 25
-        Anchors = [akTop, akRight]
-        Caption = 'Load from Json string <<<'
-        TabOrder = 3
-        OnClick = Button1Click
-      end
-      object Button2: TButton
-        Left = 463
-        Top = 47
-        Width = 138
-        Height = 25
-        Anchors = [akTop, akRight]
-        Caption = 'Save to Json string >>>'
-        TabOrder = 4
-        OnClick = Button2Click
-      end
     end
     object DBGrid3: TDBGrid
       Left = 0
       Top = 91
-      Width = 607
-      Height = 290
+      Width = 557
+      Height = 153
       Align = alClient
       DataSource = DS_Json_Data
       TabOrder = 1
@@ -146,8 +122,8 @@ object Form2: TForm2
     end
     object Panel1: TPanel
       Left = 0
-      Top = 381
-      Width = 607
+      Top = 244
+      Width = 557
       Height = 142
       Align = alBottom
       Caption = 'Panel1'
@@ -156,7 +132,7 @@ object Form2: TForm2
       ExplicitTop = 243
       ExplicitWidth = 553
       DesignSize = (
-        607
+        557
         142)
       object LBL_001: TLabel
         Left = 6
@@ -173,18 +149,17 @@ object Form2: TForm2
         Caption = 'Name of entry'
       end
       object LBL_003: TLabel
-        Left = 232
+        Left = 182
         Top = 6
         Width = 99
         Height = 15
         Anchors = [akTop, akRight]
         Caption = 'Value of entry >>>'
-        ExplicitLeft = 182
       end
       object DBEdit1: TDBEdit
         Left = 6
         Top = 38
-        Width = 318
+        Width = 268
         Height = 23
         Anchors = [akLeft, akTop, akRight]
         DataField = 'Titel'
@@ -193,7 +168,7 @@ object Form2: TForm2
         ExplicitWidth = 264
       end
       object DBMemo1: TDBMemo
-        Left = 337
+        Left = 287
         Top = 1
         Width = 269
         Height = 140
@@ -206,7 +181,7 @@ object Form2: TForm2
       object DBEdit2: TDBEdit
         Left = 6
         Top = 104
-        Width = 318
+        Width = 268
         Height = 23
         Anchors = [akLeft, akTop, akRight]
         DataField = 'Name'
@@ -215,36 +190,6 @@ object Form2: TForm2
         ExplicitWidth = 264
       end
     end
-  end
-  object MMO_BASE64Content: TMemo
-    Left = 824
-    Top = 0
-    Width = 217
-    Height = 523
-    Align = alRight
-    Lines.Strings = (
-      '{"JSON-Data":['
-      '  {'
-      '    "Titel": "Test nr 1",'
-      '    "Value": "Some test data \r\nhere",'
-      '    "Name": "Test#01"'
-      '  },'
-      '  {'
-      '    "Titel": "Test nr 2",'
-      '    "Value": "Some other test \r\ndata '
-      'here",'
-      '    "Name": "Test#02"'
-      '  },'
-      '  {'
-      '    "Titel": "Test nr 3",'
-      '    "Value": "fvsvassfv",'
-      '    "Name": "Test3"'
-      '  }'
-      ']}')
-    TabOrder = 2
-    ExplicitLeft = 438
-    ExplicitTop = 91
-    ExplicitHeight = 290
   end
   object DS_Json_Data: TDataSource
     DataSet = TBL_Json_Data

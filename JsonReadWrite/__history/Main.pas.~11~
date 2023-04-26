@@ -143,39 +143,15 @@ end;
 // ====================================================================================================================
 //
 // ====================================================================================================================
-procedure TForm2.Button1Click(Sender: TObject);
-var
-  LJSON: TJSONValue;
-  LIntf: IRESTResponseJSON;
-  DataOut:String;
-Begin
-  // Clear last value
-  RRDSA_Json_Data.ResponseJSON := nil;
-  DataOut:=TNetEncoding.Base64.Decode(MMO_BASE64Content.Text);
-
-  LJSON := TJSONObject.ParseJSONValue('{"JSON-Data":'+DataOut+'}');
-  if LJSON = nil then
-    raise Exception.Create('Invalid JSON');
-  LIntf := TAdapterJSONValue.Create(LJSON);
-  RRDSA_Json_Data.ResponseJSON := LIntf;
-
-  TBL_Json_Data.Active := True;
-  TBL_Json_Data.OnUpdateRecord := TBL_Json_DataUpdateRecord;
-  TBL_Json_Data.AfterEdit := TBL_Json_DataAfterEdit;
-  TBL_Json_Data.AfterInsert := TBL_Json_DataAfterInsert;
-end;
-
 
 procedure TForm2.BTN_LoadFromJsonStringClick(Sender: TObject);
 var
   LJSON: TJSONValue;
   LIntf: IRESTResponseJSON;
-    DataOut:String;
 Begin
   // Clear last value
   RRDSA_Json_Data.ResponseJSON := nil;
-   DataOut:=TNetEncoding.Base64.Decode(MMO_InJsonContent.Text);
-  LJSON := TJSONObject.ParseJSONValue('{"JSON-Data":'+DataOut+'}');
+  LJSON := TJSONObject.ParseJSONValue(MMO_InJsonContent.Lines.Text);
   if LJSON = nil then
     raise Exception.Create('Invalid JSON');
   LIntf := TAdapterJSONValue.Create(LJSON);
@@ -216,7 +192,27 @@ begin
 
 end;
 
+procedure TForm2.Button1Click(Sender: TObject);
+var
+  LJSON: TJSONValue;
+  LIntf: IRESTResponseJSON;
+  DataOut:String;
+Begin
+  // Clear last value
+  RRDSA_Json_Data.ResponseJSON := nil;
+  DataOut:=TNetEncoding.Base64.Decode(MMO_BASE64Content.Text);
 
+  LJSON := TJSONObject.ParseJSONValue('{"JSON-Data":"'+DataOut+'"}');
+  if LJSON = nil then
+    raise Exception.Create('Invalid JSON');
+  LIntf := TAdapterJSONValue.Create(LJSON);
+  RRDSA_Json_Data.ResponseJSON := LIntf;
+
+  TBL_Json_Data.Active := True;
+  TBL_Json_Data.OnUpdateRecord := TBL_Json_DataUpdateRecord;
+  TBL_Json_Data.AfterEdit := TBL_Json_DataAfterEdit;
+  TBL_Json_Data.AfterInsert := TBL_Json_DataAfterInsert;
+end;
 
 procedure TForm2.Button2Click(Sender: TObject);
 var
